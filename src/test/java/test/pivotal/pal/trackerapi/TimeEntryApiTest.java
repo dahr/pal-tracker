@@ -29,21 +29,18 @@ public class TimeEntryApiTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
     private final long projectId = 123L;
     private final long userId = 456L;
     private TimeEntry timeEntry = new TimeEntry(projectId, userId, LocalDate.parse("2017-01-08"), 8);
 
     @BeforeEach
     public void setUp() throws Exception {
-//        MysqlDataSource dataSource = new MysqlDataSource();
-//        dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
-//
-//        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.execute("TRUNCATE time_entries");
-//
+
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
